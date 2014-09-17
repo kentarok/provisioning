@@ -24,7 +24,7 @@ iptables -A INPUT -s 0.0.0.0/0 -d 0.0.0.0/0 -p all -j REJECT
 service iptables save
 
 # Install basic tools
-#yum install -y git gcc make openssl-devel libxml2-devel libxslt-devel
+yum install -y git gcc make openssl-devel libxml2-devel libxslt-devel
 
 # Enable EPEL Package
 rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
