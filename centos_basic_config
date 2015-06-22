@@ -38,8 +38,8 @@ cp -ip ~/.ssh/authorized_keys /home/kentarok/.ssh/.
 chmod 600 /home/kentarok/.ssh/authorized_keys
 chown kentarok:kentarok /home/kentarok/.ssh/authorized_keys
 
+# Edit sudoers
 cp -ip /etc/sudoers /etc/sudoers.org
 echo "" >> /etc/sudoers
 echo "## Allow kentarok to run any commands anywhere" >> /etc/sudoers
 echo "kentarok ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
