@@ -4,13 +4,13 @@
 sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
 service sshd restart
 
-# Change to Japanese locale
-yum -y groupinstall "Japanese Support"
-sed -i.org -e "s/en_US.UTF-8/ja_JP.UTF-8/g" /etc/sysconfig/i18n
+## Change to Japanese locale
+#yum -y groupinstall "Japanese Support"
+#sed -i.org -e "s/en_US.UTF-8/ja_JP.UTF-8/g" /etc/sysconfig/i18n
 
 # Change to JST time zone
-rm -f /etc/localtime
-ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+sed -i -e "s/^ZONE/#ZONE/g" -e "1i ZONE=\"Asia/Tokyo\"" /etc/sysconfig/clock
+/usr/sbin/tzdata-update
 
 # Configure Linux Firewall
 # --- CAUTION --- Change to deny access from public address
@@ -24,7 +24,22 @@ iptables -A INPUT -s 0.0.0.0/0 -d 0.0.0.0/0 -p all -j REJECT
 service iptables save
 
 # Install basic tools
-yum install -y git gcc make openssl-devel libxml2-devel libxslt-devel
+yum install -y git gcc make openssl-devel libxml2-devel libxslt-devel tree
 
 # Enable EPEL Package
 rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+# Create User
+useradd kentarok
+mkdir /home/kentarok/.ssh
+chmod 755 .ssh
+chown kentarok:kentarok /home/kentarok/.ssh
+cp -ip ~/.ssh/authorized_keys /home/kentarok/.ssh/.
+chmod 600 /home/kentarok/.ssh/authorized_keys
+chown kentarok:kentarok /home/kentarok/.ssh/authorized_keys
+
+cp -ip /etc/sudoers /etc/sudoers.org
+echo "" >> /etc/sudoers
+echo "## Allow kentarok to run any commands anywhere" >> /etc/sudoers
+echo "kentarok ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
