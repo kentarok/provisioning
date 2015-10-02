@@ -25,7 +25,7 @@ service iptables save
 
 # Install basic tools
 yum update -y
-yum install -y git tree cifs-utils zsh
+yum install -y git tree cifs-utils zsh telnet
 #yum install -y git gcc make openssl-devel libxml2-devel libxslt-devel tree
 
 # Enable EPEL Package
