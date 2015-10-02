@@ -24,7 +24,7 @@ iptables -A INPUT -s 0.0.0.0/0 -d 0.0.0.0/0 -p all -j REJECT
 service iptables save
 
 # Install basic tools
-yum install -y git tree 
+yum install -y git tree cifs-utils zsh
 #yum install -y git gcc make openssl-devel libxml2-devel libxslt-devel tree
 
 # Enable EPEL Package
@@ -42,7 +42,6 @@ chmod 600 /home/kentarok/.ssh/authorized_keys
 chown kentarok:myusers /home/kentarok/.ssh/authorized_keys
 
 # Edit sudoers
-cp -ip /etc/sudoers /etc/sudoers.org
 echo "" >> /etc/sudoers
 echo "## Allow kentarok to run any commands anywhere" >> /etc/sudoers
 echo "%myusers ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
