@@ -24,6 +24,7 @@ iptables -A INPUT -s 0.0.0.0/0 -d 0.0.0.0/0 -p all -j REJECT
 service iptables save
 
 # Install basic tools
+yum update -y
 yum install -y git tree cifs-utils zsh
 #yum install -y git gcc make openssl-devel libxml2-devel libxslt-devel tree
 
