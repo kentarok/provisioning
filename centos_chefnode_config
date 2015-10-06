@@ -1,0 +1,38 @@
+#!/bin/bash
+### Change to Japanese locale
+#yum -y groupinstall "Japanese Support"
+#sed -i.org -e "s/en_US.UTF-8/ja_JP.UTF-8/g" /etc/sysconfig/i18n
+
+### Change to JST time zone
+#sed -i -e "s/^ZONE/#ZONE/g" -e "1i ZONE=\"Asia/Tokyo\"" /etc/sysconfig/clock
+#/usr/sbin/tzdata-update
+
+# Configure Linux Firewall
+# --- CAUTION --- Change to deny access from public address
+iptables -A INPUT -s 10.0.0.0/8 -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+#iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+#iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -s 0.0.0.0/0 -d 0.0.0.0/0 -p all -j REJECT
+service iptables save
+
+## Install basic tools
+#yum update -y
+
+# Create User
+groupadd -g 500 myusers
+useradd -u 501 -g 500 -d /home/chefnode chefnode
+passwd -d chefnode
+mkdir -p /home/chefnode/.ssh
+chmod 755 /home/chefnode/.ssh
+chown chefnode:myusers /home/chefnode/.ssh
+cp -ip ~/.ssh/authorized_keys /home/chefnode/.ssh/.
+chmod 600 /home/chefnode/.ssh/authorized_keys
+chown chefnode:myusers /home/chefnode/.ssh/authorized_keys
+
+# Edit sudoers
+echo "" >> /etc/sudoers
+echo "## Allow %myusers to run any commands anywhere" >> /etc/sudoers
+echo "%myusers ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
