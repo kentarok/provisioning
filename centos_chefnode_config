@@ -18,6 +18,9 @@ iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -s 0.0.0.0/0 -d 0.0.0.0/0 -p all -j REJECT
 service iptables save
 
+## add chef server
+echo "10.54.251.197 sjchefs02.test.local sjchefs02" >> /etc/hosts
+
 ## Install basic tools
 #yum update -y
 
