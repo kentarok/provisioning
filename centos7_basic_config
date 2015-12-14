@@ -1,0 +1,40 @@
+#!/bin/bash
+
+## Disable text passwords
+#sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+#service sshd restart
+
+## Change to Japanese locale
+#
+#
+
+## Change to JST time zone
+#
+#
+
+## Configure Linux Firewalld
+#
+#
+
+## Install basic tools
+#yum update -y
+#yum install -y git tree cifs-utils zsh telnet lsof
+
+## Enable EPEL Package
+#rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+## Create User
+groupadd -g 500 myusers
+useradd -u 502 -g 500 -d /home/kentarok kentarok
+passwd -d kentarok
+mkdir -p /home/kentarok/.ssh
+chmod 755 /home/kentarok/.ssh
+chown kentarok:myusers /home/kentarok/.ssh
+cp -ip ~/.ssh/authorized_keys /home/kentarok/.ssh/.
+chmod 600 /home/kentarok/.ssh/authorized_keys
+chown kentarok:myusers /home/kentarok/.ssh/authorized_keys
+
+## Edit sudoers
+echo "" >> /etc/sudoers
+echo "## Allow kentarok to run any commands anywhere" >> /etc/sudoers
+echo "%myusers ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
