@@ -20,9 +20,14 @@ GNAMEID=500
 #
 #
 
-## Configure Linux Firewalld
-#
-#
+## Configure Linux Firewalldyum install -y firewalld
+yum install -y firewalld
+systemctl enable firewalld.service
+systemctl start  firewalld.service
+firewall-cmd             --change-interface=eth0 --zone=trusted
+firewall-cmd --permanent --change-interface=eth0 --zone=trusted
+firewall-cmd             --change-interface=eth1 --zone=block
+firewall-cmd --permanent --change-interface=eth1 --zone=block
 
 ## Install basic tools
 #yum update -y
