@@ -24,15 +24,17 @@
 #rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
 ## Create User
-groupadd -g 500 myusers
-useradd -u 502 -g 500 -d /home/kentarok kentarok
-passwd -d kentarok
-mkdir -p /home/kentarok/.ssh
-chmod 755 /home/kentarok/.ssh
-chown kentarok:myusers /home/kentarok/.ssh
-cp -ip ~/.ssh/authorized_keys /home/kentarok/.ssh/.
-chmod 600 /home/kentarok/.ssh/authorized_keys
-chown kentarok:myusers /home/kentarok/.ssh/authorized_keys
+UNAME=$1
+UNAMEID=$2
+
+useradd -u ${UNAMEID} -g ${UNAMEID} -d /home/${UNAME} ${UNAME}
+passwd -d ${UNAME}
+mkdir -p /home/${UNAME}/.ssh
+chmod 755 /home/${UNAME}/.ssh
+chown ${UNAME}:myusers /home/${UNAME}/.ssh
+cp -ip ~/.ssh/authorized_keys /home/${UNAME}/.ssh/.
+chmod 600 /home/${UNAME}/.ssh/authorized_keys
+chown ${UNAME}:myusers /home/${UNAME}/.ssh/authorized_keys
 
 ## Edit sudoers
 echo "" >> /etc/sudoers
