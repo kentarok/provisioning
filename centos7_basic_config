@@ -1,5 +1,13 @@
 #!/bin/bash
 
+## set Initial Login Username & uid
+UNAME=$1
+UNAMEID=$2
+
+## set Group & gid
+GNAME=myusers
+GNAMEID=500
+
 ## Disable text passwords
 #sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
 #service sshd restart
@@ -23,11 +31,11 @@
 ## Enable EPEL Package
 #rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
-## Create User
-UNAME=$1
-UNAMEID=$2
+## Create Group
+groupadd -g ${GNAMEID} ${GNAME}
 
-useradd -u ${UNAMEID} -g ${UNAMEID} -d /home/${UNAME} ${UNAME}
+## Create User
+useradd -u ${UNAMEID} -g ${GNAMEID} -d /home/${UNAME} ${UNAME}
 passwd -d ${UNAME}
 mkdir -p /home/${UNAME}/.ssh
 chmod 755 /home/${UNAME}/.ssh
@@ -38,5 +46,5 @@ chown ${UNAME}:myusers /home/${UNAME}/.ssh/authorized_keys
 
 ## Edit sudoers
 echo "" >> /etc/sudoers
-echo "## Allow kentarok to run any commands anywhere" >> /etc/sudoers
+echo "## Allow ${GNAME} group to run any commands anywhere" >> /etc/sudoers
 echo "%myusers ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
