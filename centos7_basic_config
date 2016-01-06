@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ## set Initial Login Username & uid
-UNAME=$1
-UNAMEID=$2
+UNAME=chefnode
+UNAMEID=501
 
 ## set Group & gid
 GNAME=myusers
