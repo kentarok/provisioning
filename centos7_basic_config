@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## set Initial Login Username & uid
-UNAME=chefnode
+UNAME=kentarok
 UNAMEID=501
 
 ## set Group & gid
