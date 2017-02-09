@@ -1,3 +1,6 @@
+#!/bin/sh
+
+## Chef WS Virtual Server
 #slcli vs create --test \
 # --hostname=tvcws01 --domain=tvc.local \
 # --datacenter=tok02 --billing=monthly --os=CENTOS_LATEST_64 \
@@ -5,6 +8,7 @@
 # --postinstall=https://raw.githubusercontent.com/kentarok/provisioning/master/tvcchefw_config \
 # --key=chefws_public --vlan-private=xxxxxxx
 
+## Chef Node Virtual Server
 for i in {1..26};\
   do name=$(printf tvcnode%03d $i);\
     slcli vs create --test \
