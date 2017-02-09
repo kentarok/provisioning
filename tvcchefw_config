@@ -21,13 +21,13 @@ service sshd restart
 #
 
 ## Configure Linux Firewalldyum install -y firewalld
-#yum install -y firewalld
-#systemctl enable firewalld.service
-#systemctl start  firewalld.service
-#firewall-cmd             --change-interface=eth0 --zone=trusted
-#firewall-cmd --permanent --change-interface=eth0 --zone=trusted
-#firewall-cmd             --change-interface=eth1 --zone=block
-#firewall-cmd --permanent --change-interface=eth1 --zone=block
+yum install -y firewalld
+systemctl enable firewalld.service
+systemctl start  firewalld.service
+firewall-cmd             --change-interface=eth0 --zone=trusted
+firewall-cmd --permanent --change-interface=eth0 --zone=trusted
+firewall-cmd             --change-interface=eth1 --zone=block
+firewall-cmd --permanent --change-interface=eth1 --zone=block
 
 ## Install basic tools
 #yum update -y
@@ -53,3 +53,6 @@ chown ${UNAME}:myusers /home/${UNAME}/.ssh/authorized_keys
 echo "" >> /etc/sudoers
 echo "## Allow ${GNAME} group to run any commands anywhere" >> /etc/sudoers
 echo "%myusers ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+## Chef DK install
+rpm -Uvh https://packages.chef.io/files/stable/chefdk/1.2.22/el/7/chefdk-1.2.22-1.el7.x86_64.rpm
