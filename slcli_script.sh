@@ -5,7 +5,7 @@
 # --domain=tvc.local --datacenter=tok02 --billing=monthly --os=CENTOS_LATEST_64 \
 # --cpu=2 --memory=4096 --disk=100 --network=100 \
 # --postinstall=https://raw.githubusercontent.com/kentarok/provisioning/master/tvcchefw_config \
-# --key=chewsf_public --vlan-private=xxxxxxx \
+# --key=chefw_public --vlan-private=xxxxxxx \
 # --test --hostname=tvcws01
 
 ## Chef Node 1~26 Virtual Server
