@@ -5,7 +5,7 @@
 # --domain=tvc.local --datacenter=tok02 --billing=monthly --os=CENTOS_LATEST_64 \
 # --cpu=2 --memory=4096 --disk=100 --network=100 \
 # --postinstall=https://raw.githubusercontent.com/kentarok/provisioning/master/tvcchefw_config \
-# --key=chefw_public --vlan-private=xxxxxxx \
+# --key=chefw_public --vlan-private=1513387 \
 # --test --hostname=tvcws01
 
 ## Chef Node 1~26 Virtual Server
@@ -16,6 +16,6 @@ slcli vs create \
  --domain=tvc.local --datacenter=tok02 --billing=hourly --os=CENTOS_LATEST_64 \
  --cpu=1 --memory=1024 --disk=25 --network=100 \
  --postinstall=https://raw.githubusercontent.com/kentarok/provisioning/master/tvcchefn_config \
- --key=chefn_public --vlan-private=xxxxxxx \
+ --key=chefn_public --vlan-private=1513387 \
  --test --hostname=$name \n"
 done
