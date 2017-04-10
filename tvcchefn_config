@@ -8,11 +8,9 @@ UNAMEID=1009
 GNAME=myusers
 GNAMEID=500
 
-LOGFILE=/tmp/postscript.log
-
 ## Disable text passwords
-sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config >> ${LOGFILE}
-service sshd restart >> ${LOGFILE}
+sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+service sshd restart
 
 ## Change to Japanese locale
 #
@@ -23,34 +21,34 @@ service sshd restart >> ${LOGFILE}
 #
 
 ## Configure Linux Firewalldyum install -y firewalld
-yum install -y firewalld >> ${LOGFILE}
-systemctl enable firewalld.service >> ${LOGFILE}
-systemctl start  firewalld.service >> ${LOGFILE}
-firewall-cmd             --change-interface=eth0 --zone=trusted >> ${LOGFILE}
-firewall-cmd --permanent --change-interface=eth0 --zone=trusted >> ${LOGFILE}
-firewall-cmd             --change-interface=eth1 --zone=block >> ${LOGFILE}
-firewall-cmd --permanent --change-interface=eth1 --zone=block >> ${LOGFILE}
+yum install -y firewalld
+systemctl enable firewalld.service
+systemctl start  firewalld.service
+firewall-cmd             --change-interface=eth0 --zone=trusted
+firewall-cmd --permanent --change-interface=eth0 --zone=trusted
+firewall-cmd             --change-interface=eth1 --zone=block
+firewall-cmd --permanent --change-interface=eth1 --zone=block
 
 ## Install basic tools
 #yum update -y
 #yum install -y git tree cifs-utils zsh telnet lsof
-yum install -y zip unzip >> ${LOGFILE}
+yum install -y zip unzip
 
 ## Enable EPEL Package
 #rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
 ## Create Group
-groupadd -g ${GNAMEID} ${GNAME} >> ${LOGFILE}
+groupadd -g ${GNAMEID} ${GNAME}
 
 ## Create User
-useradd -u ${UNAMEID} -g ${GNAMEID} -d /home/${UNAME} ${UNAME} >> ${LOGFILE}
-passwd -d ${UNAME} >> ${LOGFILE}
-mkdir -p /home/${UNAME}/.ssh >> ${LOGFILE}
-chmod 755 /home/${UNAME}/.ssh >> ${LOGFILE}
-chown ${UNAME}:myusers /home/${UNAME}/.ssh >> ${LOGFILE}
-cp -ip ~/.ssh/authorized_keys /home/${UNAME}/.ssh/. >> ${LOGFILE}
-chmod 600 /home/${UNAME}/.ssh/authorized_keys >> ${LOGFILE}
-chown ${UNAME}:myusers /home/${UNAME}/.ssh/authorized_keys >> ${LOGFILE}
+useradd -u ${UNAMEID} -g ${GNAMEID} -d /home/${UNAME} ${UNAME}
+passwd -d ${UNAME}
+mkdir -p /home/${UNAME}/.ssh
+chmod 755 /home/${UNAME}/.ssh
+chown ${UNAME}:myusers /home/${UNAME}/.ssh
+cp -ip ~/.ssh/authorized_keys /home/${UNAME}/.ssh/.
+chmod 600 /home/${UNAME}/.ssh/authorized_keys
+chown ${UNAME}:myusers /home/${UNAME}/.ssh/authorized_keys
 
 ## Edit sudoers
 echo "" >> /etc/sudoers
