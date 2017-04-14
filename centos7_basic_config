@@ -40,7 +40,7 @@ firewall-cmd --permanent --change-interface=eth1 --zone=block
 groupadd -g ${GNAMEID} ${GNAME}
 
 ## Create User
-useradd -u ${UNAMEID} -g ${GNAMEID} -d /home/${UNAME} ${UNAME}
+useradd -u ${UNAMEID} -g ${GNAMEID} -G wheel -d /home/${UNAME} ${UNAME}
 passwd -d ${UNAME}
 mkdir -p /home/${UNAME}/.ssh
 chmod 755 /home/${UNAME}/.ssh
