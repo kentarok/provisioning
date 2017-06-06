@@ -19,7 +19,7 @@ wget http://www.rfxnetworks.com/downloads/apf-current.tar.gz -P /tmp
 tar -zxvf /tmp/apf-current.tar.gz; cd apf-*
 sh ./install.sh
 mv /etc/apf/conf.apf /etc/apf/conf.apf.org
-wget https://raw.githubusercontent.com/kentarok/provisioning/master/conf.apf -Pnc /etc/apf/
+wget https://raw.githubusercontent.com/kentarok/provisioning/master/conf.apf -P /etc/apf/
 systemctl start apf
 systemctl enable apf
 
