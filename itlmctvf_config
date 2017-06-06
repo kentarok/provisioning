@@ -12,7 +12,8 @@ GNAMEID=501
 sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
 service sshd restart
 
-
+## Install basic tools
+yum install -y zip unzip git net-tools
 
 ## Configure APF Firewall
 wget http://www.rfxnetworks.com/downloads/apf-current.tar.gz -P /tmp
@@ -22,9 +23,6 @@ mv /etc/apf/conf.apf /etc/apf/conf.apf.org
 wget https://raw.githubusercontent.com/kentarok/provisioning/master/conf.apf -P /etc/apf/
 systemctl start apf
 systemctl enable apf
-
-## Install basic tools
-yum install -y zip unzip git
 
 ## Create Group
 groupadd -g ${GNAMEID} ${GNAME}
