@@ -1,0 +1,45 @@
+#!/bin/bash
+
+## set Initial Login Username & uid
+UNAME=chefuser01
+UNAMEID=501
+
+## set Group & gid
+GNAME=myusers
+GNAMEID=501
+
+## Disable text passwords
+sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+service sshd restart
+
+
+
+## Configure APF Firewall
+wget http://www.rfxnetworks.com/downloads/apf-current.tar.gz -P /tmp
+tar -zxvf /tmp/apf-current.tar.gz; cd apf-*
+sh ./install.sh
+mv /etc/apf/conf.apf /etc/apf/conf.apf.org
+wget https://raw.githubusercontent.com/kentarok/provisioning/master/conf.apf -Pnc /etc/apf/
+systemctl start apf
+systemctl enable apf
+
+## Install basic tools
+yum install -y zip unzip git
+
+## Create Group
+groupadd -g ${GNAMEID} ${GNAME}
+
+## Create User
+useradd -u ${UNAMEID} -g ${GNAMEID} -d /home/${UNAME} ${UNAME}
+passwd -d ${UNAME}
+mkdir -p /home/${UNAME}/.ssh
+chmod 755 /home/${UNAME}/.ssh
+chown ${UNAME}:myusers /home/${UNAME}/.ssh
+cp -ip ~/.ssh/authorized_keys /home/${UNAME}/.ssh/.
+chmod 600 /home/${UNAME}/.ssh/authorized_keys
+chown ${UNAME}:myusers /home/${UNAME}/.ssh/authorized_keys
+
+## Edit sudoers
+echo "" >> /etc/sudoers
+echo "## Allow ${GNAME} group to run any commands anywhere" >> /etc/sudoers
+echo "%myusers ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
