@@ -392,7 +392,7 @@ EGF="1"
 
 # Common outbound (egress) TCP ports
 #EG_TCP_CPORTS="21,25,80,443,43"
-EG_TCP_CPORTS="80,443,43"
+EG_TCP_CPORTS="22,43,80,443"
 
 # Common outbound (egress) UDP ports
 EG_UDP_CPORTS="20,21,53"
