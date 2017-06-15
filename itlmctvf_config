@@ -14,6 +14,7 @@ service sshd restart
 
 ## Install basic tools
 yum install -y zip unzip git net-tools
+rpm -ivh https://packages.chef.io/files/stable/chefdk/1.4.3/el/7/chefdk-1.4.3-1.el7.x86_64.rpm
 
 ## Configure APF Firewall
 wget http://www.rfxnetworks.com/downloads/apf-current.tar.gz -P /tmp
