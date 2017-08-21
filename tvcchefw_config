@@ -42,7 +42,7 @@ groupadd -g ${GNAMEID} ${GNAME}
 
 ## Create User
 useradd -u ${UNAMEID} -g ${GNAMEID} -d /home/${UNAME} ${UNAME}
-passwd -d ${UNAME}
+## passwd -d ${UNAME}
 mkdir -p /home/${UNAME}/.ssh
 chmod 755 /home/${UNAME}/.ssh
 chown ${UNAME}:myusers /home/${UNAME}/.ssh
@@ -53,7 +53,7 @@ chown ${UNAME}:myusers /home/${UNAME}/.ssh/authorized_keys
 ## monkey patching
 groupadd -g 501 myusers2
 useradd -u 1010 -g 501 -d /home/kazx kazx
-passwd -d ${UNAME}
+passwd -d kazx
 mkdir -p /home/kazx/.ssh
 chmod 755 /home/kazx/.ssh
 chown kazx:myusers2 /home/kazx/.ssh
@@ -61,7 +61,7 @@ cp -ip ~/.ssh/authorized_keys /home/kazx/.ssh/.
 chmod 600 /home/kazx/.ssh/authorized_keys
 chown kazx:myusers /home/kazx/.ssh/authorized_keys
 useradd -u 1011 -g 501 -d /home/kentarok kentarok
-passwd -d ${UNAME}
+passwd -d kentarok
 mkdir -p /home/kentarok/.ssh
 chmod 755 /home/kentarok/.ssh
 chown kentarok:myusers2 /home/kentarok/.ssh
@@ -75,4 +75,4 @@ echo "## Allow ${GNAME} group to run any commands anywhere" >> /etc/sudoers
 echo "%myusers2 ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 ## Chef DK install
-rpm -Uvh https://packages.chef.io/files/stable/chefdk/1.2.22/el/7/chefdk-1.2.22-1.el7.x86_64.rpm
+rpm -Uvh https://packages.chef.io/files/stable/chefdk/2.1.11/el/7/chefdk-2.1.11-1.el7.x86_64.rpm
