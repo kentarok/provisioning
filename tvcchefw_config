@@ -71,7 +71,7 @@ chown kentarok:myusers /home/kentarok/.ssh/authorized_keys
 
 ## Edit sudoers
 echo "" >> /etc/sudoers
-echo "## Allow ${GNAME} group to run any commands anywhere" >> /etc/sudoers
+echo "## Allow myuser2 group to run any commands anywhere" >> /etc/sudoers
 echo "%myusers2 ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 ## Chef DK install
