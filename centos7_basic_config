@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## set Initial Login Username & uid
-UNAME=chefuser01
+UNAME=kentarok
 UNAMEID=1009
 
 ## set Group & gid
@@ -9,8 +9,9 @@ GNAME=myusers
 GNAMEID=500
 
 ## Disable text passwords
-#sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
-#service sshd restart
+sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+service sshd restart
 
 ## Change to Japanese locale
 #
@@ -21,20 +22,20 @@ GNAMEID=500
 #
 
 ## Configure Linux Firewalldyum install -y firewalld
-yum install -y firewalld
-systemctl enable firewalld.service
-systemctl start  firewalld.service
-firewall-cmd             --change-interface=eth0 --zone=trusted
-firewall-cmd --permanent --change-interface=eth0 --zone=trusted
-firewall-cmd             --change-interface=eth1 --zone=block
-firewall-cmd --permanent --change-interface=eth1 --zone=block
+# yum install -y firewalld
+# systemctl enable firewalld.service
+# systemctl start  firewalld.service
+# firewall-cmd             --change-interface=eth0 --zone=trusted
+# firewall-cmd --permanent --change-interface=eth0 --zone=trusted
+# firewall-cmd             --change-interface=eth1 --zone=block
+# firewall-cmd --permanent --change-interface=eth1 --zone=block
 
 ## Install basic tools
-#yum update -y
-#yum install -y git tree cifs-utils zsh telnet lsof
+# yum update -y
+# yum install -y git tree cifs-utils zsh telnet lsof
 
 ## Enable EPEL Package
-#rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+# rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
 ## Create Group
 groupadd -g ${GNAMEID} ${GNAME}
