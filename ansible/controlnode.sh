@@ -57,9 +57,9 @@ echo "%${GNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${GNAME}
 sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
 service sshd restart
 
-yum install -y https://centos7.iuscommunity.org/ius-release.rpm
-yum install -y python36u python36u-libs python36u-devel python36u-pip
-pip3 install ansible ansible-lint
+#yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+#yum install -y python36u python36u-libs python36u-devel python36u-pip
+#pip3 install ansible ansible-lint
 
 #cd ~/ && curl -O https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz
 #tar xvzf ansible-tower-setup-latest.tar.gz
