@@ -60,6 +60,9 @@ service sshd restart
 rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum install -y ansible
 
+#git clone
+#ansible-playbook -i localhost, -c local hoge.yml
+
 # yum install -y https://centos7.iuscommunity.org/ius-release.rpm
 # yum install -y python36u python36u-libs python36u-devel python36u-pip
 # pip3 install ansible ansible-lint
