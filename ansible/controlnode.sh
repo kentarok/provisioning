@@ -37,7 +37,7 @@ service sshd restart
 yum -y install yum-utils
 yum-config-manager --enable rhel-server-rhscl-7-rpms
 yum install -y rh-python36
-echo "export PATH=$PATH:/opt/rh/rh-python36/root/usr/bin/" > path.sh
+echo "export PATH=$PATH:/opt/rh/rh-python36/root/usr/bin/" > /etc/profile.d/path.sh
 source /etc/profile.d/path.sh
 
 ## install ansible
