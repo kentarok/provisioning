@@ -44,8 +44,8 @@ ln -s /bin/pip3.5 /bin/pip3
 pip3 install ansible ansible-lint pywinrm
 
 ## install ansible tower
-curl -o play.yml https://raw.githubusercontent.com/kentarok/provisioning/master/ansible/play.yml 
-ansible-playbook -i localhost, -c local play.yml > play.log 2>&1
+curl -o /tmp/play.yml https://raw.githubusercontent.com/kentarok/provisioning/master/ansible/play.yml 
+ansible-playbook -i localhost, -c local /tmp/play.yml > /tmp/play.log 2>&1
 
 ## Configure Linux Firewalldyum install -y firewalld
 #yum install -y firewalld
