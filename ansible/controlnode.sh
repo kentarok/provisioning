@@ -30,15 +30,15 @@ sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ss
 service sshd restart
 
 ## install python3.5
-# yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-# yum install -y https://repo.ius.io/ius-release-el7.rpm
-# yum install -y python35u python35u-libs python35u-devel python35u-pip
-# ln -s /bin/pip3.5 /bin/pip3
-yum -y install yum-utils
-yum-config-manager --enable rhel-server-rhscl-7-rpms
-yum install -y rh-python36
-echo "export PATH=$PATH:/opt/rh/rh-python36/root/usr/bin/" > /etc/profile.d/path.sh
-source /etc/profile.d/path.sh
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum install -y https://repo.ius.io/ius-release-el7.rpm
+yum install -y python35u python35u-libs python35u-devel python35u-pip
+ln -s /bin/pip3.5 /bin/pip3
+#yum -y install yum-utils
+#yum-config-manager --enable rhel-server-rhscl-7-rpms
+#yum install -y rh-python36
+#echo "export PATH=$PATH:/opt/rh/rh-python36/root/usr/bin/" > /etc/profile.d/path.sh
+#source /etc/profile.d/path.sh
 
 ## install ansible
 pip3 install ansible ansible-lint
