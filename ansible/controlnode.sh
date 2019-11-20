@@ -32,7 +32,7 @@ service sshd restart
 ## install python3.5
 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum install -y https://repo.ius.io/ius-release-el7.rpm
-yum install -y python35u python35u-libs python35u-devel python35u-pip
+yum install -y python35u python35u-libs python35u-devel python35u-pip python-winrm
 ln -s /bin/pip3.5 /bin/pip3
 #yum -y install yum-utils
 #yum-config-manager --enable rhel-server-rhscl-7-rpms
