@@ -8,31 +8,6 @@ UNAMEID=2000
 GNAME=myuser
 GNAMEID=1000
 
-## Change to Japanese locale
-#
-#
-
-## Change to JST time zone
-#
-#
-
-## Configure Linux Firewalldyum install -y firewalld
-#yum install -y firewalld
-#systemctl enable firewalld.service
-#systemctl start  firewalld.service
-#firewall-cmd             --change-interface=eth0 --zone=trusted
-#firewall-cmd --permanent --change-interface=eth0 --zone=trusted
-#firewall-cmd             --change-interface=eth1 --zone=block
-#firewall-cmd --permanent --change-interface=eth1 --zone=block
-
-## Install basic tools
-#yum update -y
-#yum install -y git tree cifs-utils zsh telnet lsof
-#yum install -y zip unzip git tree
-
-## Enable EPEL Package
-#rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-
 ## Create Group
 groupadd -g ${GNAMEID} ${GNAME}
 
@@ -50,24 +25,38 @@ chown ${UNAME}:${GNAME} /home/${UNAME}/.ssh/authorized_keys
 echo "## Allow ${GNAME} group to run any commands anywhere" >> /etc/sudoers.d/${GNAME}
 echo "%${GNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${GNAME}
 
-## Chef DK install
-#rpm -Uvh https://packages.chef.io/files/stable/chefdk/2.1.11/el/7/chefdk-2.1.11-1.el7.x86_64.rpm
-
 ## Disable text passwords
 sed -i.org -e "s/PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
 service sshd restart
 
-rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-yum install -y ansible
+## install python3.5
+# yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+# yum install -y https://repo.ius.io/ius-release-el7.rpm
+# yum install -y python35u python35u-libs python35u-devel python35u-pip
+# ln -s /bin/pip3.5 /bin/pip3
+yum -y install yum-utils
+yum-config-manager --enable rhel-server-rhscl-7-rpms
+yum install -y rh-python36
+echo "export PATH=$PATH:/opt/rh/rh-python36/root/usr/bin/" > path.sh
+source /etc/profile.d/path.sh
 
-#git clone
-#ansible-playbook -i localhost, -c local hoge.yml
+## install ansible
+pip3 install ansible ansible-lint
 
-# yum install -y https://centos7.iuscommunity.org/ius-release.rpm
-# yum install -y python36u python36u-libs python36u-devel python36u-pip
-# pip3 install ansible ansible-lint
+## install ansible tower
+curl -o play.yml https://raw.githubusercontent.com/kentarok/provisioning/master/ansible/play.yml 
+ansible-playbook -i localhost, -c local play.yml > play.log 2>&1
 
-#cd ~/ && curl -O https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-latest.tar.gz
-#tar xvzf ansible-tower-setup-latest.tar.gz
-#curl https://raw.githubusercontent.com/kentarok/provisioning/master/ansible/inventory > ./ansible-tower-setup-*/inventory
-#~/ansible-tower-setup-*/setup.sh
+## Configure Linux Firewalldyum install -y firewalld
+#yum install -y firewalld
+#systemctl enable firewalld.service
+#systemctl start  firewalld.service
+#firewall-cmd             --change-interface=eth0 --zone=trusted
+#firewall-cmd --permanent --change-interface=eth0 --zone=trusted
+#firewall-cmd             --change-interface=eth1 --zone=block
+#firewall-cmd --permanent --change-interface=eth1 --zone=block
+
+## Install basic tools
+#yum update -y
+#yum install -y git tree cifs-utils zsh telnet lsof
+#yum install -y zip unzip git tree
