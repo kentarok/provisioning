@@ -1,0 +1,26 @@
+---
+- name: playbook for ansible tower
+  hosts: all
+  vars:
+    TOWER_VER: 3.6.0-1
+    TOWER_CHECKSUM: be111c823e369f5d25445a309502168225d8ce9a41dd7294ccdff09be4cb3c04
+  
+  tasks:
+    - name: download
+      get_url: 
+        url: "https://releases.ansible.com/ansible-tower/setup/ansible-tower-setup-{{ TOWER_VER }}.tar.gz"
+        dest: "/tmp/ansible-tower-setup-{{ TOWER_VER }}.tar.gz"
+      
+    - name: untar the tarball
+      command: "tar -xzf /tmp/ansible-tower-setup-{{ TOWER_VER }}.tar.gz -C /tmp"
+
+    - name: download inventory
+      get_url:
+        url: https://raw.githubusercontent.com/kentarok/provisioning/master/ansible/inventory
+        dest: "/tmp/ansible-tower-setup-{{ TOWER_VER }}/inventory"
+
+    - name: install ansible tower
+      command: ./setup.sh
+      args:
+        chdir: "/tmp/ansible-tower-setup-{{ TOWER_VER }}"
+ 
