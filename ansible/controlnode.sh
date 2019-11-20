@@ -41,7 +41,7 @@ ln -s /bin/pip3.5 /bin/pip3
 #source /etc/profile.d/path.sh
 
 ## install ansible
-pip3 install ansible ansible-lint
+pip3 install ansible ansible-lint pywinrm
 
 ## install ansible tower
 curl -o play.yml https://raw.githubusercontent.com/kentarok/provisioning/master/ansible/play.yml 
