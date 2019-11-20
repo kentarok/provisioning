@@ -5,7 +5,7 @@ UNAME=kentarok
 UNAMEID=2000
 
 ## set Group & gid
-GNAME=myuser
+GNAME=myusers
 GNAMEID=1000
 
 ## Create Group
