@@ -1,0 +1,43 @@
+# これは awscli / eksctl / kubectl を使える環境を提供するコンテナのDockerfileです
+#
+# (1) AWS の ACCESS KEY などを コンテナ起動するOSの環境変数に設定してください
+# AWS_DEFAULT_REGION=us-east-1
+# AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# AWS_ACCESS_KEY_ID=xxxxxxxxxxxxxxxxxxxx
+#
+# (1) Dockerfileからコンテナ作成
+# docker build -t awscli . -f Dockerfile.awscli
+#
+# (2) awscliコンテナを環境変数つきで起動
+# [dockerにログインしてawscliする場合]
+# docker run -it -d -v ~/github:/github -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+#   -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+#   -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} --name awscli awscli
+# 
+# (3) コンテナにログインして、awscli / eksctl / kubectl を使う
+# docker exec -it awscli /bin/bash
+#
+# (補足) ホストOS上から$AWSする場合 は以下のような感じで。。 
+# docker run --rm -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+#   -e AWS_SECRET_ACCESS_KEY={AWS_SECRET_ACCESS_KEY} \
+#   -e AWS_DEFAULT_REGION=us-east-1 awscli aws s3 ls
+FROM python:3.6
+
+# Install awscli
+RUN apt update && \ 
+    apt install -y groff-base jq tree && \
+    pip install --upgrade pip
+RUN pip install awscli --upgrade --user --no-warn-script-location
+
+# Install IAM-Authenticator & kubectl
+RUN mkdir -p $HOME/bin && \
+    curl -o $HOME/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator && \
+    curl -o $HOME/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
+    chmod +x $HOME/bin/aws-iam-authenticator $HOME/bin/kubectl
+
+# Install eksctl
+RUN curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp && \
+    mv /tmp/eksctl $HOME/bin
+
+RUN export PATH=$HOME/bin:$PATH && \
+    echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
